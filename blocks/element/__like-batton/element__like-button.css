@@ -1,0 +1,16 @@
+.element__like-batton {
+  width: 22px;
+  height: 19px;
+  border: none;
+  padding: 0;
+  background-image: url(/images/like-button.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #fff;
+}
+
+.element__like-batton:hover {
+  cursor: pointer;
+  opacity: .5;
+}
