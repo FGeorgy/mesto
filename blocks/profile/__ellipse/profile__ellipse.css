@@ -5,3 +5,9 @@
   overflow: hidden;
   margin-right: 30px;
 }
+
+@media screen and (max-width: 767px) {
+  .profile__ellipse {
+    margin: 0;
+  }
+}
