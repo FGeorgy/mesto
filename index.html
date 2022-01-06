@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Профиль пользователя с галереей мест путешествий по России">
-  <meta name="keywords" content="Места России, Карачаевск, Эльбрус, Домбай, путешествие, интересные места">
+  <meta name="keywords" content="Места России, путешествие, интересные места">
   <meta name="author" content="Георгий Фрышкин">
   <link rel="stylesheet" href="./pages/index.css">
   <title>Место</title>
@@ -21,71 +21,57 @@
           <img src="./images/Cousteau.jpg" alt="Жак Ив Кусто" class="profile__avatar">
         </div>
         <div class="profile__info">
-          <button type="button" class="profile__edit-button">
+          <button type="button" class="profile__edit-button open-popup" name="popup_edit-profile">
           </button>
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__about">Исследователь океана</p>
         </div>
-        <button type="button" class="profile__add-button"></button>
+        <button type="button" class="profile__add-button open-popup" name="popup_add-element"></button>
       </section>
       <section class="elements">
-        <article class="element">
-          <img src="./images/Karachayevsk.jpg" alt="Карачаевск" class="element__image">
-          <div class="element__title-wrapper">
-            <h2 class="element__title">Карачаевск</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/Mount_Elbrus.jpg" alt="Гора Эльбрус" class="element__image">
-          <div class="element__title-wrapper">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/Dombai.jpg" alt="Домбай" class="element__image">
-          <div class="element__title-wrapper">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/Mount_Elbrus.jpg" alt="Гора Эльбрус" class="element__image">
-          <div class="element__title-wrapper">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/Dombai.jpg" alt="Домбай" class="element__image">
-          <div class="element__title-wrapper">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/Karachayevsk.jpg" alt="Карачаево-Черкесия" class="element__image">
-          <div class="element__title-wrapper">
-            <h2 class="element__title">Карачаево-Черкесия</h2>
-            <button type="button" class="element__like-button"></button>
-          </div>
-        </article>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
   </div>
-  <div class="popup">
-    <form name="profile-form" class="popup__profile-form">
-      <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" name="popup__input-name" class="popup__input" placeholder="Имя" value="">
-      <input type="text" name="popup__input-about" class="popup__input" placeholder="О себе" value="">
-      <button type="submit" class="popup__save-button">Сохранить</button>
-      <button type="button" class="popup__close-button"></button>
-    </form>
-  </div>
+  
+    <div id="popup_edit-profile" class="popup">
+      <form name="edit-profile" class="popup__form popup__form_edit-profile">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input type="text" name="popup__input-name" class="popup__input" placeholder="Имя" value="">
+        <input type="text" name="popup__input-about" class="popup__input" placeholder="О себе" value="">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="button" class="popup__close-button"></button>
+      </form>
+    </div>
+    <div id="popup_add-element" class="popup">
+      <form name="add-elem" class="popup__form">
+        <h2 class="popup__title">Новое место</h2>
+        <input type="text" name="popup__input-place" class="popup__input" placeholder="Название" value="">
+        <input type="url" name="popup__input-url" class="popup__input" placeholder="Ссылка на картинку" value="">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="button" class="popup__close-button"></button>
+      </form>
+    </div>
+    <div id="popup_zoom-image" class="popup">
+      <figure class="popup__figure">
+        <img src="" class="popup__image">
+        <figcaption class="popup__caption"></figcaption>
+        <button type="button" class="popup__close-button"></button>
+      </figure>
+    </div>
+
+  <template class="element-template">
+    <article class="element">
+      <img src="" class="element__image">
+      <div class="element__title-wrapper">
+        <h2 class="element__title"></h2>
+        <button type="button" class="element__like-button"></button>
+      </div>
+      <button type="button" class="element__delete-button"></button>
+    </article>
+  </template>
   <script src="./js/script.js"></script>
 </body>
 </html>
