@@ -21,12 +21,12 @@
           <img src="./images/Cousteau.jpg" alt="Жак Ив Кусто" class="profile__avatar">
         </div>
         <div class="profile__info">
-          <button type="button" class="profile__edit-button open-popup" name="popup_edit-profile">
+          <button type="button" class="profile__edit-button" name="popup_edit-profile">
           </button>
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__about">Исследователь океана</p>
         </div>
-        <button type="button" class="profile__add-button open-popup" name="popup_add-element"></button>
+        <button type="button" class="profile__add-button" name="popup_add-element"></button>
       </section>
       <section class="elements">
       </section>
@@ -41,7 +41,7 @@
         <h2 class="popup__title">Редактировать профиль</h2>
         <input type="text" name="popup__input-name" class="popup__input" placeholder="Имя" value="">
         <input type="text" name="popup__input-about" class="popup__input" placeholder="О себе" value="">
-        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="submit" class="popup__save-button" name="save-button_profile">Сохранить</button>
         <button type="button" class="popup__close-button"></button>
       </form>
     </div>
@@ -50,7 +50,7 @@
         <h2 class="popup__title">Новое место</h2>
         <input type="text" name="popup__input-place" class="popup__input" placeholder="Название" value="">
         <input type="url" name="popup__input-url" class="popup__input" placeholder="Ссылка на картинку" value="">
-        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="submit" class="popup__save-button" name="save-button_element">Сохранить</button>
         <button type="button" class="popup__close-button"></button>
       </form>
     </div>
@@ -64,7 +64,7 @@
 
   <template class="element-template">
     <article class="element">
-      <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" class="element__image">
+      <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" class="element__image" alt="Изображение">
       <div class="element__title-wrapper">
         <h2 class="element__title"></h2>
         <button type="button" class="element__like-button"></button>
