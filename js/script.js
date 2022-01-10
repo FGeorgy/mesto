@@ -7,13 +7,13 @@ const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 
 //Переменные попапа popup_edit-profile
-const openButtonProfile = document.querySelector('.profile__edit-button');
+const buttonOpenPopupEdProfile = document.querySelector('.profile__edit-button');
 const popupEditProfile = document.querySelector('#popup_edit-profile');
 const inputName = popupEditProfile.querySelector('input[name="popup__input-name"]');
 const inputAbout = popupEditProfile.querySelector('input[name="popup__input-about"]');
 
 //Переменные попапа popup_add-element
-const openButtonElement = document.querySelector('.profile__add-button');
+const buttonOpenPopupAddElement = document.querySelector('.profile__add-button');
 const popupAddElement = document.querySelector('#popup_add-element');
 const inputPlase = popupAddElement.querySelector('input[name="popup__input-place"]');
 const inputUrl = popupAddElement.querySelector('input[name="popup__input-url"]');
@@ -76,6 +76,7 @@ function createCard(elem) {
   image.addEventListener('click', function() {
     openPopup(popupZoomImg);
     zoomImg.src = elem.link;
+    zoomImg.alt = ('Место. ' + elem.name);
     imgCaption.textContent = elem.name;
   });
 
@@ -95,12 +96,10 @@ initialCards.forEach(function(elem) {
 //Функция добавления новой карточки от юзера
 function addNewElement () {
   if (!(inputPlase.value === '') && !(inputUrl.value === '')) {
-    newCards.push({
-      name: inputPlase.value,
-      link: inputUrl.value
+    renderCard({
+      name: inputPlase.value, 
+      link: inputUrl.value 
     });
-    
-    renderCard(newCards.pop());
   };
 };
 
@@ -115,21 +114,21 @@ function closePopup(popup) {
 };
 
 //Открытие попапа popup_edit-profile
-openButtonProfile.addEventListener('click', function() {
+buttonOpenPopupEdProfile.addEventListener('click', function() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
   openPopup(popupEditProfile);
 });
 
 //Открытие попапа popup_add-element
-openButtonElement.addEventListener('click', function () {
+buttonOpenPopupAddElement.addEventListener('click', function () {
   openPopup(popupAddElement);
 });
 
 //Закрытие попапов
-closeButtons.forEach(function(index) {
-  index.addEventListener('click', function (evt) {
-    closePopup(index.closest('.popup'));
+closeButtons.forEach(function(item) {
+  item.addEventListener('click', function (evt) {
+    closePopup(item.closest('.popup'));
     evt.preventDefault();
   });
 })
