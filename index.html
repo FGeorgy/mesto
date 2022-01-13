@@ -37,20 +37,32 @@
   </div>
   
     <div id="popup_edit-profile" class="popup">
-      <form name="edit-profile" class="popup__form popup__form_edit-profile">
+      <form name="edit-profile" class="popup__form" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" name="popup__input-name" class="popup__input" placeholder="Имя" value="">
-        <input type="text" name="popup__input-about" class="popup__input" placeholder="О себе" value="">
+        <label class="popup__label">
+          <input type="text" name="popup__input-name" class="popup__input" placeholder="Имя" value="" minlength="2" maxlength="40" required>
+          <span class="popup__input-error popup__input-name-error"></span>
+        </label>
+        <label class="popup__label">
+          <input type="text" name="popup__input-about" class="popup__input" placeholder="О себе" value="" minlength="2" maxlength="200" required>
+          <span class="popup__input-error popup__input-about-error"></span>
+        </label>
         <button type="submit" class="popup__save-button" name="save-button_profile">Сохранить</button>
         <button type="button" class="popup__close-button"></button>
       </form>
     </div>
-    <div id="popup_add-element" class="popup">
-      <form name="add-elem" class="popup__form">
+    <div id="popup_add-element" class="popup" >
+      <form name="add-elem" class="popup__form" novalidate>
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" name="popup__input-place" class="popup__input" placeholder="Название" value="">
-        <input type="url" name="popup__input-url" class="popup__input" placeholder="Ссылка на картинку" value="">
-        <button type="submit" class="popup__save-button" name="save-button_element">Сохранить</button>
+        <label class="popup__label">
+          <input type="text" name="popup__input-place" class="popup__input" placeholder="Название" value="" minlength="2" maxlength="30" required>
+          <span class="popup__input-error popup__input-place-error"></span>
+        </label>
+        <label class="popup__label">
+          <input type="url" name="popup__input-url" class="popup__input" placeholder="Ссылка на картинку" value="" required>
+          <span class="popup__input-error popup__input-url-error"></span>
+        </label>
+        <button type="submit" class="popup__save-button popup__save-button_inactive" name="save-button_element">Сохранить</button>
         <button type="button" class="popup__close-button"></button>
       </form>
     </div>
