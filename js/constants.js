@@ -26,6 +26,9 @@ const imgCaption = popupZoomImg.querySelector('.popup__caption');
 //Массив кнопок закрытия попапов
 const closeButtons = document.querySelectorAll('.popup__close-button');
 
+//Массив форм
+const popupForms = Array.from(document.querySelectorAll('.popup__form'));
+
 //Массивы карточек
 const initialCards = [
   {

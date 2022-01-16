@@ -13,7 +13,7 @@ function createCard(elem) {
 
   likeButton.addEventListener('click', likeElement);
   deleteButton.addEventListener('click', deleteCard);
-  image.addEventListener('click', zoomElement);
+  image.addEventListener('click', () => zoomElement(elem));
 
   return element;
 };
@@ -24,12 +24,12 @@ function likeElement(evt) {
 };
 
 //Функция удаления карточки
-function deleteCard() {
-  deleteButton.closest('.element').remove();
+function deleteCard(evt) {
+  evt.target.closest('.element').remove();
 };
 
 //Функция увеличения изображения
-function zoomElement() {
+function zoomElement(elem) {
   zoomImg.src = elem.link;
   zoomImg.alt = ('Место. ' + elem.name);
   imgCaption.textContent = elem.name;
@@ -96,7 +96,9 @@ buttonOpenPopupEdProfile.addEventListener('click', function() {
 //Открытие попапа popup_add-element
 buttonOpenPopupAddElement.addEventListener('click', function () {
   openPopup(popupAddElement);
-  saveButtonDesabled (popupAddElement);
+  const inputs = Array.from(popupAddElement.querySelectorAll('.popup__input'));
+  const saveButton = popupAddElement.querySelector('.popup__save-button');
+  disableButton(inputs, saveButton);
 });
 
 //Закрытие попапов

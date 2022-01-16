@@ -34,28 +34,30 @@ function hasInvalidInput(inputs) {
   });
 };
 
-//Функция блокирования кнопки "Сохранить"
+//Функция блокирования кнопки "Сохранить" при проверки валидности
 function disableButton(inputs, saveButton) {
+  disableSaveButton (saveButton);
   if (hasInvalidInput(inputs)) {
-    saveButton.classList.add('popup__save-button_inactive');
-    saveButton.setAttribute('disabled', true);
+    disableSaveButton (saveButton);
   } else {
-    saveButton.classList.remove('popup__save-button_inactive');
-    saveButton.removeAttribute('disabled');
+    activateSaveButton (saveButton);
   };
 };
 
-function saveButtonDesabled (popup) {
-  const saveButtonPopup = popup.querySelector('.popup__save-button');
-  saveButtonPopup.classList.add('popup__save-button_inactive');
-  saveButtonPopup.setAttribute('disabled', true);
+//Дизактивация кнопки Сохранить
+function disableSaveButton (saveButton) {
+  saveButton.classList.add(`${saveButton.name}_inactive`);
+  saveButton.setAttribute('disabled', true);
 };
 
+//Активация кнопки Сохранить
+function activateSaveButton (saveButton) {
+  saveButton.classList.remove(`${saveButton.name}_inactive`);
+  saveButton.removeAttribute('disabled');
+}
+
 //Функция запуска валидации в инпутах определенного элемента
-function setEventListeners(formElement) {
-  const inputs = Array.from(formElement.querySelectorAll('.popup__input'));
-  const saveButton = formElement.querySelector('.popup__save-button');
-  disableButton(inputs, saveButton);
+function setEventListeners(formElement, inputs, saveButton) {
   inputs.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement);
@@ -65,13 +67,16 @@ function setEventListeners(formElement) {
 };
 
 //Функция определения элемента из массива форм
-function enableValidation() {
-  const popupForms = Array.from(document.querySelectorAll('.popup__form'));
-  popupForms.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    setEventListeners(formElement);
+function enableValidation(forms) {
+  forms.forEach((formElement) => {
+    const inputs = Array.from(formElement.querySelectorAll('.popup__input'));
+    const saveButton = formElement.querySelector('.popup__save-button');
+    setEventListeners(formElement, inputs, saveButton);
   });
 };
-enableValidation();
+enableValidation(popupForms);
+
+//Решил сделать так:
+// Функция принимает массив форм
+// и первым делом расскладывает его на составляющие
+// При использовании валидатора, в дальнейшем, нужно будет только поменять селекторы в стартовой функции
