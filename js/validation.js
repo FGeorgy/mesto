@@ -1,82 +1,80 @@
-//Функция добавления класса "Ошибка"
-function showError(formElement, inputElement, errorMessage) {
-  const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
-  errorElement.classList.add('popup__input-error_active');
-  inputElement.classList.add('popup__input_type_error');
-  errorElement.textContent = errorMessage;
+enableValidation(popupForms);
+
+//Функция определения элемента из массива форм
+function enableValidation(forms) {
+  forms.forEach((formElement) => {
+    const elemOptions = {
+      inputs: Array.from(formElement.querySelectorAll('.popup__input')),
+      saveButton: formElement.querySelector('.popup__save-button'),
+      saveButtonInactive: 'popup__save-button_inactive',
+      inputError: 'popup__input_type_error',
+      inputErrorText: 'popup__input-error_active'
+    };
+    setEventListeners(formElement, elemOptions);
+    disableButton(elemOptions);
+  });
 };
 
-//Функция удаления класса "Ошибка"
-
-//В тренажере происходит обращение к селекторам напрямую.
-//Зачем делать сложные конфигурации, если селектор с ошибкой один
-//для всех инпутов, и один для всех span с сообщением об ошибки?
-function hideError(formElement, inputElement) {
-  const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
-  errorElement.classList.remove('popup__input-error_active');
-  inputElement.classList.remove('popup__input_type_error');
-  errorElement.textContent = '';
+//Функция запуска валидации в инпутах определенного элемента
+function setEventListeners(formElement, elemOptions) {
+  elemOptions.inputs.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      checkInputValidity(formElement, inputElement, elemOptions);
+      disableButton(elemOptions);
+    });
+  });
 };
 
 //Функция проверки на валидность
-function checkInputValidity(formElement, inputElement) {
+function checkInputValidity(formElement, inputElement, elemOptions) {
   if (!inputElement.validity.valid) {
-    showError(formElement, inputElement, inputElement.validationMessage);
+    showError(formElement, inputElement, inputElement.validationMessage, elemOptions);
   } else {
-    hideError(formElement, inputElement);
+    hideError(formElement, inputElement, elemOptions);
   };
 };
 
 
-function hasInvalidInput(inputs) {
-  return inputs.some((inputElement) => {
+function hasInvalidInput(elemOptions) {
+  return elemOptions.inputs.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 };
 
 //Функция блокирования кнопки "Сохранить" при проверки валидности
-function disableButton(inputs, saveButton) {
-  disableSaveButton (saveButton);
-  if (hasInvalidInput(inputs)) {
-    disableSaveButton (saveButton);
+function disableButton(elemOptions) {
+  disableSaveButton (elemOptions);
+  if (hasInvalidInput(elemOptions)) {
+    disableSaveButton (elemOptions);
   } else {
-    activateSaveButton (saveButton);
+    activateSaveButton (elemOptions);
   };
 };
 
 //Дизактивация кнопки Сохранить
-function disableSaveButton (saveButton) {
-  saveButton.classList.add(`${saveButton.name}_inactive`);
-  saveButton.setAttribute('disabled', true);
+function disableSaveButton (elemOptions) {
+  elemOptions.saveButton.classList.add(elemOptions.saveButtonInactive);
+  elemOptions.saveButton.setAttribute('disabled', true);
 };
 
 //Активация кнопки Сохранить
-function activateSaveButton (saveButton) {
-  saveButton.classList.remove(`${saveButton.name}_inactive`);
-  saveButton.removeAttribute('disabled');
+function activateSaveButton (elemOptions) {
+  elemOptions.saveButton.classList.remove(elemOptions.saveButtonInactive);
+  elemOptions.saveButton.removeAttribute('disabled');
 }
 
-//Функция запуска валидации в инпутах определенного элемента
-function setEventListeners(formElement, inputs, saveButton) {
-  inputs.forEach((inputElement) => {
-    inputElement.addEventListener('input', () => {
-      checkInputValidity(formElement, inputElement);
-      disableButton(inputs, saveButton);
-    });
-  });
+//Функция добавления класса "Ошибка"
+function showError(formElement, inputElement, errorMessage, elemOptions) {
+  const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
+  errorElement.classList.add(elemOptions.inputErrorText);
+  inputElement.classList.add(elemOptions.inputError);
+  errorElement.textContent = errorMessage;
 };
 
-//Функция определения элемента из массива форм
-function enableValidation(forms) {
-  forms.forEach((formElement) => {
-    const inputs = Array.from(formElement.querySelectorAll('.popup__input'));
-    const saveButton = formElement.querySelector('.popup__save-button');
-    setEventListeners(formElement, inputs, saveButton);
-  });
+//Функция удаления класса "Ошибка"
+function hideError(formElement, inputElement, elemOptions) {
+  const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
+  errorElement.classList.remove(elemOptions.inputErrorText);
+  inputElement.classList.remove(elemOptions.inputError);
+  errorElement.textContent = '';
 };
-enableValidation(popupForms);
-
-//Решил сделать так:
-// Функция принимает массив форм
-// и первым делом расскладывает его на составляющие
-// При использовании валидатора, в дальнейшем, нужно будет только поменять селекторы в стартовой функции

@@ -96,9 +96,6 @@ buttonOpenPopupEdProfile.addEventListener('click', function() {
 //Открытие попапа popup_add-element
 buttonOpenPopupAddElement.addEventListener('click', function () {
   openPopup(popupAddElement);
-  const inputs = Array.from(popupAddElement.querySelectorAll('.popup__input'));
-  const saveButton = popupAddElement.querySelector('.popup__save-button');
-  disableButton(inputs, saveButton);
 });
 
 //Закрытие попапов
@@ -115,9 +112,6 @@ popupEditProfile.addEventListener('submit', function (evt) {
   closePopup(popupEditProfile);
   evt.preventDefault();
 });
-
-//В этом и задумка, что когда пользователь случайно закрыл попап,
-//то данные сохраняются при следующем открытии
 
 popupAddElement.addEventListener('submit', function (evt) {
   addNewElement();
