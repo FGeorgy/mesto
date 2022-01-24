@@ -96,7 +96,14 @@ buttonOpenPopupEdProfile.addEventListener('click', function() {
 //Открытие попапа popup_add-element
 buttonOpenPopupAddElement.addEventListener('click', function () {
   openPopup(popupAddElement);
+  disableButtonPopupAddElement(popupAddElement, elemOptions);
 });
+
+//Проверка на валидность при открытии popup_add-element
+function disableButtonPopupAddElement (formElement, elemOptions) {
+  const inputs = Array.from(formElement.querySelectorAll(elemOptions.input));
+  disableButton(formElement, inputs, elemOptions);
+};
 
 //Закрытие попапов
 closeButtons.forEach(function(item) {

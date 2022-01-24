@@ -1,26 +1,29 @@
-enableValidation(popupForms);
+const elemOptions = {
+  form: '.popup__form',
+  input: '.popup__input',
+  saveButton: '.popup__save-button',
+  saveButtonInactive: 'popup__save-button_inactive',
+  inputError: 'popup__input_type_error',
+  inputErrorText: 'popup__input-error_active'
+};
+
+enableValidation(elemOptions);
 
 //Функция определения элемента из массива форм
-function enableValidation(forms) {
+function enableValidation(elemOptions) {
+  const forms = Array.from(document.querySelectorAll(elemOptions.form));
   forms.forEach((formElement) => {
-    const elemOptions = {
-      inputs: Array.from(formElement.querySelectorAll('.popup__input')),
-      saveButton: formElement.querySelector('.popup__save-button'),
-      saveButtonInactive: 'popup__save-button_inactive',
-      inputError: 'popup__input_type_error',
-      inputErrorText: 'popup__input-error_active'
-    };
     setEventListeners(formElement, elemOptions);
-    disableButton(elemOptions);
   });
 };
 
 //Функция запуска валидации в инпутах определенного элемента
 function setEventListeners(formElement, elemOptions) {
-  elemOptions.inputs.forEach((inputElement) => {
+  const inputs = Array.from(formElement.querySelectorAll(elemOptions.input));
+  inputs.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement, elemOptions);
-      disableButton(elemOptions);
+      disableButton(formElement, inputs, elemOptions);
     });
   });
 };
@@ -34,33 +37,34 @@ function checkInputValidity(formElement, inputElement, elemOptions) {
   };
 };
 
+//Функция блокирования кнопки "Сохранить" при проверки валидности
+function disableButton(formElement, inputs, elemOptions) {
+  disableSaveButton (formElement, elemOptions);
+  if (hasInvalidInput(inputs)) {
+    disableSaveButton (formElement, elemOptions);
+  } else {
+    activateSaveButton (formElement, elemOptions);
+  };
+};
 
-function hasInvalidInput(elemOptions) {
-  return elemOptions.inputs.some((inputElement) => {
+function hasInvalidInput(inputs) {
+  return inputs.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 };
 
-//Функция блокирования кнопки "Сохранить" при проверки валидности
-function disableButton(elemOptions) {
-  disableSaveButton (elemOptions);
-  if (hasInvalidInput(elemOptions)) {
-    disableSaveButton (elemOptions);
-  } else {
-    activateSaveButton (elemOptions);
-  };
-};
-
 //Дизактивация кнопки Сохранить
-function disableSaveButton (elemOptions) {
-  elemOptions.saveButton.classList.add(elemOptions.saveButtonInactive);
-  elemOptions.saveButton.setAttribute('disabled', true);
+function disableSaveButton (formElement, elemOptions) {
+  const saveButton = formElement.querySelector(elemOptions.saveButton);
+  saveButton.classList.add(elemOptions.saveButtonInactive);
+  saveButton.setAttribute('disabled', true);
 };
 
 //Активация кнопки Сохранить
-function activateSaveButton (elemOptions) {
-  elemOptions.saveButton.classList.remove(elemOptions.saveButtonInactive);
-  elemOptions.saveButton.removeAttribute('disabled');
+function activateSaveButton (formElement, elemOptions) {
+  const saveButton = formElement.querySelector(elemOptions.saveButton)
+  saveButton.classList.remove(elemOptions.saveButtonInactive);
+  saveButton.removeAttribute('disabled');
 }
 
 //Функция добавления класса "Ошибка"
