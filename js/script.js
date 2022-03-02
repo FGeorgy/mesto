@@ -1,4 +1,4 @@
-
+import { closeButtons } from "./constants.js";
 //Функция создания карточки и всех слушателей событий в ней
 function createCard(elem) {
   const element = elementTemplate.cloneNode(true);
@@ -42,18 +42,16 @@ function renderCard(elem) {
 };
 
 //Добавление 6-ти начальных карточек на страницу из массива initialCards
-initialCards.forEach(function(elem) {
-  renderCard(elem);
-});
+// initialCards.forEach(function(elem) {
+//   renderCard(elem);
+// });
 
 //Функция добавления новой карточки от юзера
-function addNewElement () {
-  if (!(inputPlase.value === '') && !(inputUrl.value === '')) {
-    renderCard({
-      name: inputPlase.value, 
-      link: inputUrl.value 
-    });
-  };
+const addNewElement = () => {
+  renderCard({
+    name: inputPlase.value, 
+    link: inputUrl.value 
+  });
 };
 
 //Функция закрытия попапа кликом на оверлей
@@ -73,7 +71,7 @@ function closePopupEscape (evt) {
 };
 
 //Функция открытия попапов
-function openPopup(popup) {
+export const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   popup.addEventListener('click', closePopupOverlay);
   document.addEventListener('keydown', closePopupEscape);

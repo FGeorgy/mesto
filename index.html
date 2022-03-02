@@ -21,12 +21,12 @@
           <img src="./images/Cousteau.jpg" alt="Жак Ив Кусто" class="profile__avatar">
         </div>
         <div class="profile__info">
-          <button type="button" class="profile__edit-button" name="popup_edit-profile">
+          <button type="button" class="profile__edit-button" name="button-edit-profile">
           </button>
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__about">Исследователь океана</p>
         </div>
-        <button type="button" class="profile__add-button" name="popup_add-element"></button>
+        <button type="button" class="profile__add-button" name="button-add-element"></button>
       </section>
       <section class="elements">
       </section>
@@ -36,8 +36,8 @@
     </footer>
   </div>
   
-    <div id="popup_edit-profile" class="popup">
-      <form name="edit-profile" class="popup__form" novalidate>
+    <div id="edit-profile" class="popup">
+      <form name="form-edit-profile" class="popup__form" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
         <label class="popup__label">
           <input type="text" name="popup__input-name" class="popup__input" placeholder="Имя" value="" minlength="2" maxlength="40" required>
@@ -51,8 +51,8 @@
         <button type="button" class="popup__close-button"></button>
       </form>
     </div>
-    <div id="popup_add-element" class="popup" >
-      <form name="add-elem" class="popup__form" novalidate>
+    <div id="add-element" class="popup" >
+      <form name="form-add-element" class="popup__form" novalidate>
         <h2 class="popup__title">Новое место</h2>
         <label class="popup__label">
           <input type="text" name="popup__input-place" class="popup__input" placeholder="Название" value="" minlength="2" maxlength="30" required>
@@ -84,8 +84,6 @@
       <button type="button" class="element__delete-button"></button>
     </article>
   </template>
-  <script src="./js/constants.js"></script>
-  <script src="./js/script.js"></script>
-  <script src="./js/validation.js"></script>
+  <script type="module" src="./js/index.js"></script>
 </body>
 </html>
