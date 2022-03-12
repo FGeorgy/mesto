@@ -1,4 +1,4 @@
-import { Card } from './card.js';
+import { Card } from './Card.js';
 import {
   initialCards,
   buttonOpenPopupEdProfile,
@@ -13,24 +13,25 @@ import {
   profileName,
   profileAbout,
   elemOptions,
-  popupAddElementForm
+  popupEditProfileForm,
+  popupAddElementForm,
+  templateElement,
+  elements
 } from './constants.js';
-import { Validation } from './validation.js';
+import { FormValidation } from './FormValidation.js';
 
 initialCards.forEach((item) => {
-  const card = new Card(item);
-  const cardElement = card.renderCard();
+  const card = new Card(item, templateElement);
+  const cardElement = card.generateCard();
+  elements.append(cardElement);
 });
+ 
+const formEditProfileValidation = new FormValidation(popupEditProfileForm, elemOptions);
+formEditProfileValidation.enableValidation();
 
-const enableValidation = (data) => {
-  const forms = Array.from(document.querySelectorAll(data.form));
-  forms.forEach((form) => {
-    const validation = new Validation(form, data);
-    const formValidation = validation.setEventListeners();
-  })
-}
-
-enableValidation(elemOptions);
+const formAddElementValidation = new FormValidation(popupAddElementForm, elemOptions);
+formAddElementValidation.enableValidation();
+formAddElementValidation.disableButton();
 
 export const closePopupOverlay = (evt) => {
   if (!evt.target.closest('.popup__form')) {
@@ -85,14 +86,15 @@ const addNewElement = () => {
   const card = new Card({
     name: inputPlase.value, 
     link: inputUrl.value 
-  });
+  }, templateElement);
 
-  const cardElement = card.renderCard();
+  const cardElement = card.generateCard();
+  elements.prepend(cardElement);
 };
 
 popupAddElement.addEventListener('submit', function (evt) {
   evt.preventDefault();
   addNewElement();
-  popupAddElement.querySelector('form').reset();
+  popupAddElementForm.reset();
   closePopup(popupAddElement);
 });

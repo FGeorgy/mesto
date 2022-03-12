@@ -8,6 +8,7 @@ export const profileAbout = document.querySelector('.profile__about');
 //Переменные попапа popup_edit-profile
 export const buttonOpenPopupEdProfile = document.querySelector('.profile__edit-button');
 export const popupEditProfile = document.querySelector('#edit-profile');
+export const popupEditProfileForm = popupEditProfile.querySelector('.popup__form');
 export const inputName = popupEditProfile.querySelector('input[name="popup__input-name"]');
 export const inputAbout = popupEditProfile.querySelector('input[name="popup__input-about"]');
 
@@ -28,7 +29,6 @@ export const closeButtons = document.querySelectorAll('.popup__close-button');
 
 //Массив форм
 export const popupForms = Array.from(document.querySelectorAll('.popup__form'));
-
 
 //Массивы карточек
 export const initialCards = [
@@ -59,10 +59,11 @@ export const initialCards = [
 ];
 
 export const elemOptions = {
-  form: '.popup__form',
   input: '.popup__input',
   saveButton: '.popup__save-button',
   saveButtonInactive: 'popup__save-button_inactive',
   inputError: 'popup__input_type_error',
   inputErrorText: 'popup__input-error_active'
 };
+
+export const templateElement = '#template_element';

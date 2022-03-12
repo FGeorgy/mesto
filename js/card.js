@@ -2,14 +2,16 @@ import { popupZoomImg, zoomImg, zoomImgCaption, elements } from "./constants.js"
 import { openPopup } from "./index.js";
 
 export class Card {
-  constructor(data) {
+  constructor(data, selector) {
     this._name = data.name;
     this._link = data.link;
+
+    this._selector = selector;
   }
 
   _getTemplate() {
     const element = document
-      .querySelector('.element-template')
+      .querySelector(this._selector)
       .content
       .querySelector('.element')
       .cloneNode(true);
@@ -34,7 +36,6 @@ export class Card {
   _setEventListeners() {
     this._likeButton = this._element.querySelector('.element__like-button');
     this._deleteButton = this._element.querySelector('.element__delete-button');
-    this._closeButton = popupZoomImg.querySelector('.popup__close-button');
     
     this._likeButton.addEventListener('click', () => {
       this._likeElement();
@@ -47,13 +48,9 @@ export class Card {
     this._image.addEventListener('click', () => {
       this._zoomImage();
     });
-
-    this._closeButton.addEventListener('click', () => {
-      this._clozePopup();
-    })
   }
 
-  _generateCard() {
+  generateCard() {
     this._element = this._getTemplate();
     this._title = this._element.querySelector('.element__title');
     this._image = this._element.querySelector('.element__image');
@@ -65,9 +62,5 @@ export class Card {
     this._image.alt = `Место. ${this._name}`;
 
     return this._element;
-  }
-
-  renderCard() {
-    elements.prepend(this._generateCard());
   }
 }
