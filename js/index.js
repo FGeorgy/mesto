@@ -1,4 +1,6 @@
-import { Card } from './Card.js';
+import Card from './Card.js';
+import FormValidation from './FormValidation.js';
+
 import {
   initialCards,
   buttonOpenPopupEdProfile,
@@ -18,7 +20,6 @@ import {
   templateElement,
   elements
 } from './constants.js';
-import { FormValidation } from './FormValidation.js';
 
 const createCard = (data, template) => {
   const card = new Card(data, template);

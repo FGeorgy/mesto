@@ -1,7 +1,7 @@
-import { popupZoomImg, zoomImg, zoomImgCaption, elements } from "./constants.js";
+import { popupZoomImg, zoomImg, zoomImgCaption } from "./constants.js";
 import { openPopup } from "./index.js";
 
-export class Card {
+export default class Card {
   constructor(data, template) {
     this._name = data.name;
     this._link = data.link;

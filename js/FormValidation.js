@@ -1,4 +1,4 @@
-export class FormValidation {
+export default class FormValidation {
   constructor(form, data) {
     this._form = form;
     this._saveButton = this._form.querySelector(data.saveButton);
