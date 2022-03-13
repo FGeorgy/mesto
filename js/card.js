@@ -2,11 +2,11 @@ import { popupZoomImg, zoomImg, zoomImgCaption, elements } from "./constants.js"
 import { openPopup } from "./index.js";
 
 export class Card {
-  constructor(data, selector) {
+  constructor(data, template) {
     this._name = data.name;
     this._link = data.link;
 
-    this._selector = selector;
+    this._selector = template;
   }
 
   _getTemplate() {

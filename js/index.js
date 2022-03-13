@@ -20,9 +20,13 @@ import {
 } from './constants.js';
 import { FormValidation } from './FormValidation.js';
 
+const createCard = (data, template) => {
+  const card = new Card(data, template);
+  return card.generateCard();
+}
+
 initialCards.forEach((item) => {
-  const card = new Card(item, templateElement);
-  const cardElement = card.generateCard();
+  const cardElement = createCard(item, templateElement);
   elements.append(cardElement);
 });
  
@@ -31,16 +35,15 @@ formEditProfileValidation.enableValidation();
 
 const formAddElementValidation = new FormValidation(popupAddElementForm, elemOptions);
 formAddElementValidation.enableValidation();
-formAddElementValidation.disableButton();
 
-export const closePopupOverlay = (evt) => {
+const closePopupOverlay = (evt) => {
   if (!evt.target.closest('.popup__form')) {
     const popupActive = document.querySelector('.popup_opened');
     closePopup(popupActive);
   };
 };
 
-export const closePopupEscape = (evt) => {
+const closePopupEscape = (evt) => {
   if (evt.key === 'Escape') {
     const popupActive = document.querySelector('.popup_opened');
     closePopup(popupActive);
@@ -53,7 +56,7 @@ export const openPopup = (popup) => {
   document.addEventListener('keydown', closePopupEscape);
 };
 
-export const closePopup = (popup) => {
+const closePopup = (popup) => {
   popup.removeEventListener('click', closePopupOverlay);
   document.removeEventListener('keydown', closePopupEscape);
   popup.classList.remove('popup_opened');
@@ -67,6 +70,7 @@ buttonOpenPopupEdProfile.addEventListener('click', () => {
 
 buttonOpenPopupAddElement.addEventListener('click', () => {
   openPopup(popupAddElement);
+  formAddElementValidation.disableButton();
 });
 
 closeButtons.forEach(function(item) {
@@ -83,12 +87,11 @@ popupEditProfile.addEventListener('submit', function (evt) {
 });
 
 const addNewElement = () => {
-  const card = new Card({
-    name: inputPlase.value, 
-    link: inputUrl.value 
-  }, templateElement);
+  const cardElement = createCard({
+      name: inputPlase.value, 
+      link: inputUrl.value
+    }, templateElement);
 
-  const cardElement = card.generateCard();
   elements.prepend(cardElement);
 };
 
