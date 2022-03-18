@@ -7,18 +7,17 @@
   <meta name="description" content="Профиль пользователя с галереей мест путешествий по России">
   <meta name="keywords" content="Места России, путешествие, интересные места">
   <meta name="author" content="Георгий Фрышкин">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Место</title>
 </head>
 <body class="body">
   <div class="page">
     <header class="header">
-      <img src="./images/Logo_mesto.svg" alt="Логотип" class="header__logo">
+      <img src="<%=require('./images/Logo_mesto.svg')%>" alt="Логотип" class="header__logo">
     </header>
     <main class="main">
       <section class="profile">
         <div class="profile__ellipse">
-          <img src="./images/Cousteau.jpg" alt="Жак Ив Кусто" class="profile__avatar">
+          <img src="<%=require('./images/Cousteau.jpg')%>" alt="Жак Ив Кусто" class="profile__avatar">
         </div>
         <div class="profile__info">
           <button type="button" class="profile__edit-button" name="button-edit-profile">
@@ -37,7 +36,7 @@
   </div>
   
     <div id="edit-profile" class="popup">
-      <form name="form-edit-profile" class="popup__form" novalidate>
+      <form name="form-edit-profile" id="form-edit-profile" class="popup__form" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
         <label class="popup__label">
           <input type="text" name="popup__input-name" class="popup__input" placeholder="Имя" value="" minlength="2" maxlength="40" required>
@@ -51,8 +50,9 @@
         <button type="button" class="popup__close-button"></button>
       </form>
     </div>
+
     <div id="add-element" class="popup" >
-      <form name="form-add-element" class="popup__form" novalidate>
+      <form name="form-add-element" id="form-add-element" class="popup__form" novalidate>
         <h2 class="popup__title">Новое место</h2>
         <label class="popup__label">
           <input type="text" name="popup__input-place" class="popup__input" placeholder="Название" value="" minlength="2" maxlength="30" required>
@@ -66,7 +66,8 @@
         <button type="button" class="popup__close-button"></button>
       </form>
     </div>
-    <div id="popup_zoom-image" class="popup popup_darker-background">
+
+    <div id="zoom-image" class="popup popup_darker-background">
       <figure class="popup__figure">
         <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" class="popup__image" alt="Место">
         <figcaption class="popup__caption"></figcaption>
@@ -84,6 +85,5 @@
       <button type="button" class="element__delete-button"></button>
     </article>
   </template>
-  <script type="module" src="./js/index.js"></script>
 </body>
 </html>

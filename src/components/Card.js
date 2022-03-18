@@ -1,17 +1,17 @@
-import { popupZoomImg, zoomImg, zoomImgCaption } from "./constants.js";
-import { openPopup } from "./index.js";
 
 export default class Card {
-  constructor(data, template) {
+  constructor({ data, handleCardClick}, templateSelector) {
     this._name = data.name;
     this._link = data.link;
 
-    this._selector = template;
+    this._handleCardClick = handleCardClick;
+
+    this._templateSelector = templateSelector;
   }
 
   _getTemplate() {
     const element = document
-      .querySelector(this._selector)
+      .querySelector(this._templateSelector)
       .content
       .querySelector('.element')
       .cloneNode(true);
@@ -46,7 +46,10 @@ export default class Card {
     });
 
     this._image.addEventListener('click', () => {
-      this._zoomImage();
+      this._handleCardClick({
+        name: this._name,
+        src: this._link
+      })
     });
   }
 
