@@ -62,8 +62,8 @@ const popupEditProfile = new PopupWithForm(
   popupEditProfileSelector,
   (newValues) => {
     const data = {};
-    data.name = newValues[0];
-    data.about = newValues[1];
+    data.name = newValues.name;
+    data.about = newValues.about;
     userInfo.setUserInfo(data);
     popupEditProfile.close();
   });
@@ -72,8 +72,8 @@ const popupAddElement = new PopupWithForm(
   popupAddElementSelector,
   (newValues) => {
     const data = {};
-    data.name = newValues[0];
-    data.link = newValues[1];
+    data.name = newValues.name;
+    data.link = newValues.link;
     addCard(data);
     popupAddElement.close();
   });

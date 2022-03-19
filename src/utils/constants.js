@@ -1,7 +1,7 @@
 //Переменные попапа popup_edit-profile
 export const buttonOpenPopupEdProfile = document.querySelector('.profile__edit-button');
-export const inputName = document.querySelector('input[name="popup__input-name"]');
-export const inputAbout = document.querySelector('input[name="popup__input-about"]');
+export const inputName = document.querySelector('#popup__input-name');
+export const inputAbout = document.querySelector('#popup__input-about');
 
 //Переменные попапа popup_add-element
 export const buttonOpenPopupAddElement = document.querySelector('.profile__add-button');

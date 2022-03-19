@@ -58,7 +58,7 @@ export default class FormValidation {
     this._inputList.forEach((input) => {
       input.addEventListener('input', () => {
         this._input = input;
-        this._errorElement = this._form.querySelector(`.${this._input.name}-error`);
+        this._errorElement = this._form.querySelector(`.${this._input.id}-error`);
         this._chekInputValidity();
         this.disableButton();
       })
