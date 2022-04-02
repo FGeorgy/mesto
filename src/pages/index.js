@@ -6,11 +6,13 @@ import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PicturePopup.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
+import PopupWithInquiry from '../components/PopupWithInquiry.js';
 
 import {
-  initialCards,
   buttonOpenPopupEdProfile,
   buttonOpenPopupAddElement,
+  buttonOpenPopupEditAvatar,
   inputName,
   inputAbout,
   elemOptions,
@@ -18,39 +20,65 @@ import {
   containerSelector,
   profileNameSelector,
   profileAboutSelector,
+  profileAvatarSelector,
   popupZoomImageSelector,
   popupEditProfileSelector,
   popupAddElementSelector,
+  popupConfirmDeleteSelector,
+  popupEditAvatarSelector,
   formEditProfileSelector,
-  formAddElementSelector
+  formAddElementSelector,
+  formEditAvatarSelector
 } from '../utils/constants.js';
 
 const formEditProfileValidation = new FormValidation(formEditProfileSelector, elemOptions);
 
 const formAddElementValidation = new FormValidation(formAddElementSelector, elemOptions);
 
+const formEditAvatarValidation = new FormValidation(formEditAvatarSelector, elemOptions);
+
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-38',
+  headers: {
+    authorization: '4cca0334-ff1e-4e33-84bd-7333b413ec80',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json; charset=utf-8'
+  }
+})
+
+const cardList = new Section({
+  renderer: (item) => {
+    addCard(item);
+  }
+}, containerSelector);
+
 const userInfo = new UserInfo({
   name: profileNameSelector,
-  about: profileAboutSelector
+  about: profileAboutSelector,
+  avatar: profileAvatarSelector
 });
 
 const popupZoomImage = new PopupWithImage(popupZoomImageSelector);
 
-const createCard = (data) => {
+const createCard = (cardData) => {
   const card = new Card({
-    data: data,
-    handleCardClick: () => popupZoomImage.open(data)
-  }, templateElement);
+    data: cardData,
+    handleCardClick: () => popupZoomImage.open(cardData),
+    handleDelete: () => {
+      popupConfirmDelete.setSubmitAction(() => {
+        api.deleteCard(cardData._id)
+          .then(card.deleteCard())
+          .then(popupConfirmDelete.close())
+      });
+      popupConfirmDelete.open();
+    }
+  },
+  templateElement,
+  api,
+  userInfo.getUserId());
 
   return card;
 }
-
-const cardList = new Section({
-  data: initialCards,
-  renderer: (item) => {
-    addCard(item);
-  }
-}, containerSelector)
 
 const addCard = (data) => {
   const newCard = createCard(data);
@@ -61,31 +89,66 @@ const addCard = (data) => {
 const popupEditProfile = new PopupWithForm(
   popupEditProfileSelector,
   (newValues) => {
-    const data = {};
-    data.name = newValues.name;
-    data.about = newValues.about;
-    userInfo.setUserInfo(data);
-    popupEditProfile.close();
+    popupEditProfile.renderLoading(true);
+    api.setUserInfo(newValues)
+      .then((userData) => {
+        userInfo.setUserInfo(userData);
+        popupEditProfile.close();
+      })
+      .finally(() => {
+        popupEditProfile.renderLoading(false);
+      })
   });
 
 const popupAddElement = new PopupWithForm(
   popupAddElementSelector,
   (newValues) => {
-    const data = {};
-    data.name = newValues.name;
-    data.link = newValues.link;
-    addCard(data);
-    popupAddElement.close();
+    popupAddElement.renderLoading(true);
+    api.addCard(newValues)
+      .then((data) => {
+        addCard(data);
+        popupAddElement.close();
+      })
+      .finally(() => {
+        popupAddElement.renderLoading(false);
+      })
   });
+
+const popupEditAvatar = new PopupWithForm(
+  popupEditAvatarSelector,
+  (newValues) => {
+    popupEditAvatar.renderLoading(true);
+    api.setUserAvatar(newValues)
+      .then((data) => {
+        userInfo.setUserInfo(data);
+        popupEditAvatar.close();
+      })
+      .finally(() => {
+        popupEditAvatar.renderLoading(false);
+      })
+  });
+
+const popupConfirmDelete = new PopupWithInquiry(popupConfirmDeleteSelector);
+
+api.getInitialCards()
+  .then((initialCards) => {
+    cardList.renderItems(initialCards);
+})
+
+api.getUserInfo()
+  .then((userData) => {
+    userInfo.setUserInfo(userData);
+  })
 
 formEditProfileValidation.enableValidation();
 formAddElementValidation.enableValidation();
+formEditAvatarValidation.enableValidation();
 
-cardList.renderItems();
-
-popupEditProfile.setEventListener();
-popupAddElement.setEventListener();
+popupEditProfile.setEventListeners();
+popupAddElement.setEventListeners();
 popupZoomImage.setEventListeners();
+popupConfirmDelete.setEventListeners();
+popupEditAvatar.setEventListeners();
 
 buttonOpenPopupEdProfile.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
@@ -97,4 +160,9 @@ buttonOpenPopupEdProfile.addEventListener('click', () => {
 buttonOpenPopupAddElement.addEventListener('click', () => {
   popupAddElement.open();
   formAddElementValidation.disableButton();
+})
+
+buttonOpenPopupEditAvatar.addEventListener('click', () => {
+  popupEditAvatar.open();
+  formEditAvatarValidation.disableButton();
 })
