@@ -16,12 +16,14 @@ export default class FormValidation {
   }
 
   _hideError() {
+    this._errorElement = this._form.querySelector(`.${this._input.id}-error`);
     this._errorElement.classList.remove(this._inputErrorTextClass);
     this._input.classList.remove(this._inputErrorClass);
     this._errorElement.textContent = '';
   }
 
   _showError() {
+    this._errorElement = this._form.querySelector(`.${this._input.id}-error`);
     this._errorElement.classList.add(this._inputErrorTextClass);
     this._input.classList.add(this._inputErrorClass);
     this._errorElement.textContent = this._input.validationMessage;
@@ -55,10 +57,9 @@ export default class FormValidation {
   }
 
   _setEventListeners() {
-    this._inputList.forEach((input) => {
+    this._inputList.forEach(input => {
       input.addEventListener('input', () => {
         this._input = input;
-        this._errorElement = this._form.querySelector(`.${this._input.id}-error`);
         this._chekInputValidity();
         this.disableButton();
       })
@@ -67,5 +68,13 @@ export default class FormValidation {
 
   enableValidation() {
     this._setEventListeners();
+  }
+
+  checkError() {
+    this._inputList.forEach(input => {
+      this._input = input;
+      this._hideError();
+    })
+    this.disableButton();
   }
 }

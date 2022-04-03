@@ -42,12 +42,14 @@ export default class Card {
           this._dislikeElement;
           this._likeCount.textContent = obj.likes.length;
         })
+        .catch((err) => console.log(err));
     } else {
       this._api.likeElement(this._id)
         .then((obj) => {
           this._likeElement();
           this._likeCount.textContent = obj.likes.length;
         })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -58,13 +60,6 @@ export default class Card {
   deleteCard() {
     this._element.remove();
     this._element = null;
-  }
-
-  _zoomImage() {
-    zoomImg.src = this._link;
-    zoomImg.alt = `Место. ${this._name}`;
-    zoomImgCaption.textContent = this._name;
-    openPopup(popupZoomImg);
   }
 
   _setEventListeners() {

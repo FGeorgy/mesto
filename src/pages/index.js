@@ -4,7 +4,7 @@ import Card from '../components/Card.js';
 import FormValidation from '../components/FormValidation.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-import PopupWithImage from '../components/PicturePopup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import PopupWithInquiry from '../components/PopupWithInquiry.js';
@@ -69,6 +69,7 @@ const createCard = (cardData) => {
         api.deleteCard(cardData._id)
           .then(card.deleteCard())
           .then(popupConfirmDelete.close())
+          .catch((err) => console.log(err));
       });
       popupConfirmDelete.open();
     }
@@ -95,6 +96,7 @@ const popupEditProfile = new PopupWithForm(
         userInfo.setUserInfo(userData);
         popupEditProfile.close();
       })
+      .catch((err) => console.log(err))
       .finally(() => {
         popupEditProfile.renderLoading(false);
       })
@@ -109,6 +111,7 @@ const popupAddElement = new PopupWithForm(
         addCard(data);
         popupAddElement.close();
       })
+      .catch((err) => console.log(err))
       .finally(() => {
         popupAddElement.renderLoading(false);
       })
@@ -123,6 +126,7 @@ const popupEditAvatar = new PopupWithForm(
         userInfo.setUserInfo(data);
         popupEditAvatar.close();
       })
+      .catch((err) => console.log(err))
       .finally(() => {
         popupEditAvatar.renderLoading(false);
       })
@@ -130,15 +134,14 @@ const popupEditAvatar = new PopupWithForm(
 
 const popupConfirmDelete = new PopupWithInquiry(popupConfirmDeleteSelector);
 
-api.getInitialCards()
-  .then((initialCards) => {
+Promise.all([api.getInitialCards(), api.getUserInfo()])
+  .then(([initialCards, userData]) => {
     cardList.renderItems(initialCards);
-})
-
-api.getUserInfo()
-  .then((userData) => {
     userInfo.setUserInfo(userData);
   })
+  .catch((err) => {
+    console.log(err);
+  });
 
 formEditProfileValidation.enableValidation();
 formAddElementValidation.enableValidation();
@@ -154,15 +157,16 @@ buttonOpenPopupEdProfile.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
   inputName.value = userData.name;
   inputAbout.value = userData.about;
+  formEditProfileValidation.checkError();
   popupEditProfile.open();
 });
 
 buttonOpenPopupAddElement.addEventListener('click', () => {
+  formAddElementValidation.checkError();
   popupAddElement.open();
-  formAddElementValidation.disableButton();
 })
 
 buttonOpenPopupEditAvatar.addEventListener('click', () => {
+  formEditAvatarValidation.checkError();
   popupEditAvatar.open();
-  formEditAvatarValidation.disableButton();
 })

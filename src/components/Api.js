@@ -14,9 +14,6 @@ export default class Api {
     .then((obj) => {
       return obj;
     })
-    .catch((err) => {
-      console.error(err);
-    })
   }
 
   getInitialCards() {
